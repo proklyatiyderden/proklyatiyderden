@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>proklyatiy · 3D</title>
+  <!-- Google Font: Bangers (интересный, комиксовый, с характером) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+  <style>
+    /* Сброс и центрирование на весь экран */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 30% 30%, #1a1e2b, #0b0d14);
+      font-family: 'Bangers', cursive;
+      overflow: hidden;
+      /* легкая виньетка для драматизма */
+      box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7);
+    }
+
+    /* 3D-контейнер */
+    .scene {
+      perspective: 800px;
+      perspective-origin: 50% 40%;
+    }
+
+    /* Основной текст с многослойной 3D-тенью */
+    .text-3d {
+      font-size: clamp(4rem, 20vw, 12rem);
+      font-weight: 400;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #f5e6d3; /* тёплый светлый оттенок, чтобы выделялся на тёмном фоне */
+      text-shadow: 
+        /* ближние слои — создают объём */
+        0 2px 0 #c0a080,
+        0 4px 0 #a88566,
+        0 6px 0 #8f6e4f,
+        0 8px 0 #785a3e,
+        0 10px 0 #61452e,
+        0 12px 0 #4a321f,
+        0 14px 0 #3a2616,
+        0 16px 0 #2a1a0e,
+        /* дальние слои — глубина и размытие */
+        0 20px 10px rgba(0, 0, 0, 0.6),
+        0 30px 20px rgba(0, 0, 0, 0.4),
+        /* лёгкое свечение для «интересности» */
+        0 0 20px rgba(255, 200, 120, 0.3);
+      transform: 
+        rotateX(8deg) 
+        rotateY(-5deg) 
+        rotateZ(2deg);
+      transition: transform 0.2s ease-out;
+      /* плавный ховер-эффект (можно и без, но с ним интерактивнее) */
+      will-change: transform;
+    }
+
+    /* Легкий интерактив: при наведении текст чуть поворачивается — эффект «оживания» */
+    .text-3d:hover {
+      transform: 
+        rotateX(4deg) 
+        rotateY(-2deg) 
+        rotateZ(1deg) 
+        scale(1.02);
+      text-shadow: 
+        0 2px 0 #c0a080,
+        0 4px 0 #a88566,
+        0 6px 0 #8f6e4f,
+        0 8px 0 #785a3e,
+        0 10px 0 #61452e,
+        0 12px 0 #4a321f,
+        0 14px 0 #3a2616,
+        0 16px 0 #2a1a0e,
+        0 22px 12px rgba(0, 0, 0, 0.7),
+        0 34px 24px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(255, 210, 130, 0.5);
+    }
+
+    /* Дополнительный слой блеска (псевдоэлемент) — добавляет «стеклянности» и объёма */
+    .text-3d {
+      position: relative;
+      display: inline-block;
+    }
+
+    .text-3d::before {
+      content: 'proklyatiy';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      color: rgba(255, 255, 255, 0.08);
+      text-shadow: none;
+      transform: translateZ(-1px);
+      filter: blur(1px);
+      pointer-events: none;
+      /* едва заметный «призрак» для глубины */
+    }
+
+    /* Адаптивность для мобильных — уже задан через clamp, но подправим letter-spacing */
+    @media (max-width: 600px) {
+      .text-3d {
+        letter-spacing: 3px;
+        text-shadow: 
+          0 1px 0 #c0a080,
+          0 2px 0 #a88566,
+          0 3px 0 #8f6e4f,
+          0 4px 0 #785a3e,
+          0 5px 0 #61452e,
+          0 6px 0 #4a321f,
+          0 7px 0 #3a2616,
+          0 8px 0 #2a1a0e,
+          0 12px 8px rgba(0, 0, 0, 0.6),
+          0 18px 12px rgba(0, 0, 0, 0.4),
+          0 0 15px rgba(255, 200, 120, 0.3);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <div class="text-3d">proklyatiy</div>
+  </div>
+</body>
+</html>
